@@ -11,6 +11,8 @@ const userRoutes = require("./routes/user/user.routes");
 const adminProductRoutes = require("./routes/admin/product.routes");
 const shopProductRoutes = require("./routes/shop/product.routes");
 const shopCartRoutes = require("./routes/shop/cart.routes");
+const shopAddressRoutes = require("./routes/shop/address.routes");
+const shopOrderRoutes = require("./routes/shop/order.routes");
 
 //! seed admin details according to node.argsv
 console.log(process.argv);
@@ -39,6 +41,8 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin/product", authenticate, authorize, adminProductRoutes);
 app.use("/api/v1/shop/product", shopProductRoutes);
 app.use("/api/v1/shop/cart", authenticate, shopCartRoutes);
+app.use("/api/v1/shop/address", authenticate, shopAddressRoutes);
+app.use("/api/v1/shop/order", authenticate, shopOrderRoutes);
 
 app.use(error);
 

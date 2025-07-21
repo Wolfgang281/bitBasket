@@ -25,12 +25,11 @@ const getAddresses = expressAsyncHandler(async (req, res) => {
 });
 
 const editAddress = expressAsyncHandler(async (req, res) => {
-  const { address, city, pincode, phone, notes } = req.body;
   const userId = req.user._id;
   const addressId = req.params.id;
   const updatedAddress = await addressCollection.findOneAndUpdate(
     { userId, _id: addressId },
-    { address, city, pincode, phone, notes },
+    req.body,
     { new: true, runValidators: true }
   );
   if (!updatedAddress) return next(new ErrorHandler("Address not found", 404));
