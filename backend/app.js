@@ -9,13 +9,17 @@ const { authenticate, authorize } = require("./middleware/auth.middleware");
 
 const userRoutes = require("./routes/user/user.routes");
 const adminProductRoutes = require("./routes/admin/product.routes");
+const adminOrderRoutes = require("./routes/admin/order.routes");
 const shopProductRoutes = require("./routes/shop/product.routes");
 const shopCartRoutes = require("./routes/shop/cart.routes");
 const shopAddressRoutes = require("./routes/shop/address.routes");
 const shopOrderRoutes = require("./routes/shop/order.routes");
+const shopSearchRoutes = require("./routes/shop/search.routes");
+const shopReviewRoutes = require("./routes/shop/review.routes");
+const commonFeatureRoutes = require("./routes/common/feature.routes");
 
 //! seed admin details according to node.argsv
-console.log(process.argv);
+// console.log(process.argv);
 if (process.argv[2] === "seed") {
   let adminSeeder = require("./seeder/adminSeeder");
   adminSeeder();
@@ -28,7 +32,7 @@ app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma"],
   })
 );
@@ -39,10 +43,14 @@ app.use(cookieParser());
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin/product", authenticate, authorize, adminProductRoutes);
+app.use("/api/v1/admin/order", authenticate, authorize, adminOrderRoutes);
 app.use("/api/v1/shop/product", shopProductRoutes);
 app.use("/api/v1/shop/cart", authenticate, shopCartRoutes);
 app.use("/api/v1/shop/address", authenticate, shopAddressRoutes);
 app.use("/api/v1/shop/order", authenticate, shopOrderRoutes);
+app.use("/api/v1/shop/search", shopSearchRoutes);
+app.use("/api/v1/shop/review", authenticate, shopReviewRoutes);
+app.use("/api/v1/common/feature", commonFeatureRoutes);
 
 app.use(error);
 

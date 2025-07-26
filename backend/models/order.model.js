@@ -87,7 +87,7 @@ const OrderSchema = new Schema(
   },
   {
     timestamps: true, // adds createdAt and updatedAt
-    versionKey: false,
+    versionKey: false, // removes __v
   }
 );
 
